@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{%block title%}To-Do{%endblock%}
+{% block content %}
+
+
+{% for message in messages %}
+	<div class="alert alert-warning alert-dismissable" role="alert">
+		<button class="close" data-dismiss="alert">
+			<small><sup>x</sup></small>
+		</button>
+		{{ message }}
+	</div>	
+{% endfor %}
+
+{% if all_items %}
+	{% for things in all_items %}
+		{% if things.completed %}
+			<div class="card  text-white bg-dark" style="width: 18rem;">
+			  <div class="card-body">
+			    <h5 class="card-title">{{ things.item }}</h5>
+			    <a href="{% url 'uncross' things.id %}" class="card-link">Uncross</a>
+			    <a href="{% url 'edit' things.id %}" class="card-link">Edit</a>
+			    <a href="{% url 'delete' things.id %}" class="card-link">Delete</a>
+			  </div>
+			</div>
+		{% else %}
+			<div class="card" style="width: 18rem;">
+			  <div class="card-body">
+			    <h5 class="card-title">{{ things.item }}</h5>
+			    <a href="{% url 'cross_off' things.id %}" class="card-link">Cross-Off</a>
+			    <a href="{% url 'edit' things.id %}" class="card-link">Edit</a>
+			    <a href="{% url 'delete' things.id %}" class="card-link">Delete</a>
+			  </div>
+			</div>
+		{% endif %}
+		<br/>
+	{% endfor %}
+{% endif %}
+
+{% endblock %}
